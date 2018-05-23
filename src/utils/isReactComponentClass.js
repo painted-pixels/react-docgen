@@ -44,6 +44,13 @@ export default function isReactComponentClass(
     return true;
   }
 
+  // check for `@extends React.Component` in docblock
+  if (path.parentPath.value && path.parentPath.value.leadingComments && path.parentPath.value.leadingComments[0]) {
+    var docblock = path.parentPath.value.leadingComments[0].value;
+    if (docblock.match('@extends React.Component'))
+      return true;
+  }
+
   // extends ReactComponent?
   if (!node.superClass) {
     return false;
